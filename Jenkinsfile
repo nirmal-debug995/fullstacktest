@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "node 25"
+        nodejs "node 25" // must match the name in Jenkins Global Tool Config
     }
 
     environment {
@@ -13,7 +13,15 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/nirmal-debug995/fullstacktest.git'
+                checkout([$class: 'GitSCM',
+                    branches: [[name: 'main']], // ensure it points to main
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:nirmal-debug995/fullstacktest.git',
+                        credentialsId: 'GIT_SSH_KEY_ID' // replace with your Jenkins SSH credential ID
+                    ]]
+                ])
             }
         }
 
