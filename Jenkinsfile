@@ -13,9 +13,7 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                git branch: 'main',
-                    url: 'git@github.com:nirmal-debug995/fullstacktest.git',
-                    credentialsId: 'GIT_SSH_KEY_ID'
+                git 'https://github.com/nirmal-debug995/fullstacktest.git'
             }
         }
 
@@ -27,14 +25,24 @@ pipeline {
 
         stage('Stop Old App') {
             steps {
-                sh 'pkill -f "node app.js" || true'
+                // Stop pm2 process if already running
+                sh 'pm2 delete chat-app || true'
             }
         }
 
         stage('Run App') {
             steps {
-                sh 'nohup npm start > app.log 2>&1 &'
+                // Start the app using pm2
+                sh 'pm2 start app.js --name chat-app --update-env'
+                sh 'pm2 save'
             }
+        }
+    }
+
+    post {
+        always {
+            // Show pm2 status for debugging
+            sh 'pm2 status'
         }
     }
 }
