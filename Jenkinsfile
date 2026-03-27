@@ -13,12 +13,8 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: 'main']], // ensure it points to main
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [],
-                    userRemoteConfigs: [[
-                        url: 'git@github.com:nirmal-debug995/fullstacktest.git',
+                git branch: 'main',
+                       url: 'git@github.com:nirmal-debug995/fullstacktest.git',
                         credentialsId: 'GIT_SSH_KEY_ID' // replace with your Jenkins SSH credential ID
                     ]]
                 ])
