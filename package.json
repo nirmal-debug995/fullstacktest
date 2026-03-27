@@ -1,12 +1,12 @@
 {
   "name": "realtime_chat_app",
   "version": "1.0.0",
-  "description": "Realtime chat application using Socket.io, Node &amp; Express.",
-  "main": "index.js",
+  "description": "Realtime chat application using Socket.io, Node & Express",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
